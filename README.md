@@ -17,7 +17,7 @@ Custom Rule created with `Illuminate\Contracts\Validation\Rule` interface was in
 
 Installing via composer is suggested:
 
-```
+```bash
 composer require arxeiss/passwordrule
 ```
 
@@ -26,7 +26,7 @@ No more steps are needed, as Laravel 5.5+ provides [automatic package discovery]
 ## Configuration
 By thefault, package contains *English* and *Czech* translations and default config is shown bellow. Do not change config file or translations in `vendor` folder. Run command
 
-```
+```bash
 php artisan vendor:publish --provider="PasswordRule\PasswordRuleServiceProvider"
 ```
 
@@ -54,7 +54,7 @@ Result message can looks like this:
 ## Usage
 ### Basic usage
 **Form Request validation**:
-```
+```php
 /**
  * Get the validation rules that apply to the request.
  *
@@ -69,7 +69,7 @@ public function rules()
 ```
 
 **Request validation**:
-```
+```php
 public function store(Request $request)
 {
     $request->validate([
@@ -83,7 +83,7 @@ PasswordRule constructor accepts 4 parameters, which can override global setting
 `new PasswordRule($minLength, $camelCase, $numbers, $specialChars)`.
 Pass `null` to load specific setting from global config.
 
-```
+```php
 return [
     // Password must be at least 8 characters long and must contains "_"
     'password' => ['required', new PasswordRule\PasswordRule(8, false, false, "_"), 'confirmed'],
