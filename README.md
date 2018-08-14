@@ -1,8 +1,10 @@
 # Password Rule for Laravel 5.5+
 
-Package contains `PasswordRule` class for validation password fields with Laravel validator. Nowdays passwords containing numbers, lower and upper case characters (and symbols) are not enough. But it is still better than simple minimum length rule.
+Package contains `PasswordRule` class for validation password fields with Laravel validator. Nowadays passwords containing numbers, lower and upper case characters (and symbols) are not enough. But it is still better than simple minimum length rule.
 
 Custom Rule created with `Illuminate\Contracts\Validation\Rule` interface was introduced in Laravel 5.5. But you can simply copy logic and use in earlier Laravel version too.
+
+**IMPORTANT NOTE** - Don't miss [Add to predefined Laravel Auth controllers](#add-to-predefined-Laravel-auth-controllers) section, as in original Controllers must be rules changed as well.
 
 ## Table of contents
 * [Installation](#instalation)
@@ -11,6 +13,7 @@ Custom Rule created with `Illuminate\Contracts\Validation\Rule` interface was in
     *  [Message format](#message-format)
 * [Usage](#usage)
     * [Overriding global settings](#overriding-global-settings)
+    * [Add to predefined Laravel Auth controllers](#add-to-predefined-Laravel-auth-controllers)
 * [Changelog](#changelog)
 
 ## Installation
@@ -24,7 +27,7 @@ composer require arxeiss/passwordrule
 No more steps are needed, as Laravel 5.5+ provides [automatic package discovery](https://laravel.com/docs/5.5/packages).
 
 ## Configuration
-By thefault, package contains *English* and *Czech* translations and default config is shown bellow. Do not change config file or translations in `vendor` folder. Run command
+By default, package contains *English* and *Czech* translations and default config is shown below. Do not change config file or translations in `vendor` folder. Run command
 
 ```bash
 php artisan vendor:publish --provider="PasswordRule\PasswordRuleServiceProvider"
@@ -88,6 +91,25 @@ return [
     // Password must be at least 8 characters long and must contains "_"
     'password' => ['required', new PasswordRule\PasswordRule(8, false, false, "_"), 'confirmed'],
 ];
+```
+
+### Add to predefined Laravel Auth controllers
+Laravel in his starter package [laravel/laravel](https://github.com/laravel/laravel) provides basic Auth controllers. Important now are **RegisterController** and **ResetPasswordController**, because in both controllers are original password rules.
+
+In RegisterController are rules directly written, it is easy to change. But in ResetPasswordController must be overridden method `rules()` as shown in code below.
+
+```php
+/**
+ * Get the password reset validation rules.
+ *
+ * @return array
+ */
+protected function rules()
+{
+    $rules = parent::rules();
+    $rules['password'] = ["required", new PasswordRule, "confirmed"];
+    return $rules;
+}
 ```
 
 ## Changelog
