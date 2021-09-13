@@ -1,3 +1,7 @@
+## Password validation from Laravel 8.39+
+> **Deprecation:** This tool is deprecated, since Password validation was added into Laravel core in version 8.39. Read more in [Laravel News](https://laravel-news.com/password-validation-rule-object-in-laravel-8) and in [Laravel documentation](https://laravel.com/docs/validation#validating-passwords)
+
+
 # Password Rule for Laravel 5.5+
 
 Package contains `PasswordRule` class for validation password fields with Laravel validator. Nowadays passwords containing numbers, lower and upper case characters (and symbols) are not enough. But it is still better than simple minimum length rule.
